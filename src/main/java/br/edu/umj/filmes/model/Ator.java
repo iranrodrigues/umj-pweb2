@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -17,15 +19,19 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Ator {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="ator_seq")
+	@SequenceGenerator(name = "ator_seq", sequenceName = "ator_seq", initialValue = 1, allocationSize = 1)
 	private Long id;
 	private String nome;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	@ManyToMany
-	@JoinTable
-	// To do: mudar os nomes das colunas que são chaves estrangeiras na tabela de junção
+	@JoinTable(
+        name = "filme_elenco",
+        joinColumns = @JoinColumn(name = "filme_id"),
+        inverseJoinColumns = @JoinColumn(name = "ator_id")
+	)
 	private List<Filme> filmes;
 	public Long getId() {
 		return id;

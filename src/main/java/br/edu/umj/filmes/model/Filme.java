@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,7 +20,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Filme {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="filme_seq")
+	@SequenceGenerator(name = "filme_seq", sequenceName = "filme_seq", initialValue = 1, allocationSize = 1)
 	private Long id;
 	private String titulo;
 	private int duracao;

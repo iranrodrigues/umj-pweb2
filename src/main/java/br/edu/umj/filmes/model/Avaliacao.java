@@ -8,12 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Avaliacao {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="avaliacao_seq")
+	@SequenceGenerator(name = "avaliacao_seq", sequenceName = "avaliacao_seq", initialValue = 1, allocationSize = 1)
 	private Long id;
 	private int nota;
 	@ManyToOne

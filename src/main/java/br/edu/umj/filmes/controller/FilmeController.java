@@ -49,7 +49,7 @@ public class FilmeController {
 	public String editar(@PathVariable("id") long id, Model model) {
 		Optional<Filme> filme = fr.findById(id);
 		model.addAttribute("filme", filme.get());
-		Iterable<Filme> filmes = fr.findAll();
+		Iterable<Filme> filmes = fr.findAllByOrderByTituloAsc();
 		model.addAttribute("filmes", filmes);
 		Iterable<Ator> atores = ar.findAll();
 		model.addAttribute("atores", atores);
@@ -90,7 +90,7 @@ public class FilmeController {
 	
 	@RequestMapping("/filmes")
 	public String listar(Model model) {
-		Iterable<Filme> filmes = fr.findAll();
+		Iterable<Filme> filmes = fr.findAllByOrderByIdAsc();
 		model.addAttribute("filmes", filmes);
 		return "filme/lista";
 	}
