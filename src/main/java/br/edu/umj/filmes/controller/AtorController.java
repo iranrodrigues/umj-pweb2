@@ -21,6 +21,7 @@ public class AtorController {
 	@RequestMapping(value="/atores/novo", method=RequestMethod.GET)
 	public String cadastrar(Model model) {
 		Iterable<Ator> atores = ar.findAll();
+		model.addAttribute("titulo", "Novo(a) ator/atriz");
 		model.addAttribute("atores", atores);
 		return "ator/novo";
 	}
@@ -73,6 +74,7 @@ public class AtorController {
 	@RequestMapping("/atores")
 	public String listar(Model model) {
 		Iterable<Ator> atores = ar.findAll();
+		model.addAttribute("titulo", "Todos(as) os(as) atores/atrizes");
 		model.addAttribute("atores", atores);
 		return "ator/lista";
 	}

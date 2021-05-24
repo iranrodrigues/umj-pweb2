@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://thymeleaf.org">
-<head>
-	<title>Filmes</title>
-	<meta charset="utf-8">
+<head th:include="fragments/modelo.html :: head">
 </head>
 <body>
-	<h1>Filmes</h1>
-	<table>
-		<tr>
-			<th>ID</th>
-			<th>Título</th>
-			<th>Data de lançamento</th>
-			<th>Direção</th>
-			<th>Nota</th>
-			<th>Ações</th>
-		</tr>
-		<tr th:each="filme : ${filmes}">
-			<td th:text="${filme.id}"></td>
-			<td><a th:href="${(#mvc.url('detalhes').arg(0, filme.id)).build()}" th:text="${filme.titulo}"></a></td>
-			<td th:text="${#dates.format(filme.dataLancamento, 'dd/MM/yyyy')}"></td>
-			<td th:text="${filme.direcao}"></td>
-			<td th:text="${filme.nota}"></td>
-			<td><a th:href="${(#mvc.url('editar').arg(0, filme.id)).build()}">Editar</a> | <a th:href="${(#mvc.url('excluir').arg(0, filme.id)).build()}">Excluir</a></td>
-		</tr>
-	</table>
+	<th:block th:include="fragments/modelo.html :: navbar"></th:block>
+	<div class="container mb-5">
+		<h1 class="display-4 mt-5">Filmes</h1>
+		<table class="table table-light table-striped table-hover">
+			<thead class="thead-dark">
+				<tr>
+					<th>ID</th>
+					<th>Título</th>
+					<th>Data de lançamento</th>
+					<th>Direção</th>
+					<th>Nota</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="filme : ${filmes}">
+					<td th:text="${filme.id}"></td>
+					<td><a th:href="${(#mvc.url('filmeDetalhes').arg(0, filme.id)).build()}" th:text="${filme.titulo}"></a></td>
+					<td th:text="${#dates.format(filme.dataLancamento, 'dd/MM/yyyy')}"></td>
+					<td th:text="${filme.direcao}"></td>
+					<td th:text="${filme.nota}"></td>
+					<td><a th:href="${(#mvc.url('filmeEditar').arg(0, filme.id)).build()}">Editar</a> | <a th:href="${(#mvc.url('filmeExcluir').arg(0, filme.id)).build()}">Excluir</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="/filmes/novo" class="btn btn-lg btn-primary">Novo filme</a>
+	</div>
+	<th:block th:include="fragments/modelo.html :: scripts"></th:block>
 </body>
 </html>

@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-	<title>Novo Ator</title>
-	<meta charset="utf-8">
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org">
+<head th:include="fragments/modelo.html :: head">
 </head>
 <body>
-	<h1>Novo ator</h1>
-	<form action="" method="post">
-		<label>Nome: <input type="text" name="nome"></label><br>
-		<label>Data de nascimento: <input type="date" name="dataNascimento"></label><br>
-		<button type="submit">Salvar</button>
-	</form>
+	<th:block th:include="fragments/modelo.html :: navbar"></th:block>
+	<div class="container mb-5">
+		<h1 class="display-4 mt-5">Novo(a) ator/atriz</h1>
+		<form action="" method="post">
+			<div class="form-group row">
+				<label class="col-sm-2">Nome:</label>
+				<div class="col-sm-10">
+					<input type="text" name="nome" class="form-control">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2">Data de nascimento:</label>
+				<div class="col-sm-6">
+					<input type="date" name="dataNascimento" class="form-control">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-lg btn-primary">Salvar</button>
+			<a href="/atores" class="btn btn-lg btn-light">Cancelar</a>
+		</form>
+	</div>
+	<th:block th:include="fragments/modelo.html :: scripts"></th:block>
 </body>
 </html>

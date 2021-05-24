@@ -27,6 +27,7 @@ public class FilmeController {
 	@RequestMapping(value="/filmes/novo", method=RequestMethod.GET)
 	public String cadastrar(Model model) {
 		Iterable<Filme> filmes = fr.findAll();
+		model.addAttribute("titulo", "Novo filme");
 		model.addAttribute("filmes", filmes);
 		return "filme/novo";
 	}
@@ -37,17 +38,20 @@ public class FilmeController {
 		return "redirect:/filmes";
 	}
 	
-	@RequestMapping(name="detalhes", value="/filmes/{id}")
+	@RequestMapping(name="filmeDetalhes", value="/filmes/{id}")
 	public String detalhes(@PathVariable("id") Long id, Model model) {
 		Optional<Filme> filme = fr.findById(id);
+		model.addAttribute("titulo", filme.get().getTitulo() + " - Filmes");
 		model.addAttribute("filme", filme.get());
+		model.addAttribute("media", fr.mediaAvaliacoes(id));
 		return "filme/detalhes";
 	}
 	
-	@RequestMapping(name="editar", value="/filmes/editar/{id}",
+	@RequestMapping(name="filmeEditar", value="/filmes/editar/{id}",
 			method=RequestMethod.GET)
 	public String editar(@PathVariable("id") long id, Model model) {
 		Optional<Filme> filme = fr.findById(id);
+		model.addAttribute("titulo", "Editar filmes");
 		model.addAttribute("filme", filme.get());
 		Iterable<Filme> filmes = fr.findAllByOrderByTituloAsc();
 		model.addAttribute("filmes", filmes);
@@ -72,7 +76,7 @@ public class FilmeController {
 		return "redirect:/filmes";
 	}
 	
-	@RequestMapping(name="excluir", value="/filmes/excluir/{id}",
+	@RequestMapping(name="filmeExcluir", value="/filmes/excluir/{id}",
 			method=RequestMethod.GET)
 	public String excluir(@PathVariable("id") long id, Model model) {
 		Optional<Filme> filme = fr.findById(id);
@@ -91,7 +95,8 @@ public class FilmeController {
 	@RequestMapping("/filmes")
 	public String listar(Model model) {
 		Iterable<Filme> filmes = fr.findAllByOrderByIdAsc();
-		model.addAttribute("filmes", filmes);
+		model.addAttribute("titulo", "Todos os filmes");
+		model.addAttribute("filmes", filmes);		
 		return "filme/lista";
 	}
 	

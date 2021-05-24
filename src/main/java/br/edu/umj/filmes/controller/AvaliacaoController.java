@@ -19,6 +19,7 @@ public class AvaliacaoController {
 	
 	@RequestMapping(value="/filmes/{id}/avaliar", method=RequestMethod.POST)
 	public String cadastrar(@PathVariable("id") long id, Avaliacao a) {
+		a.setId(null);
 		a.setTimestamp(new Date());
 		ar.save(a);
 		return "redirect:/filmes/" + id;

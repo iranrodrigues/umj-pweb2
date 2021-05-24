@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://thymeleaf.org">
-<head>
-	<title>Excluir Filme</title>
-	<meta charset="utf-8">
+<head th:include="fragments/modelo.html :: head">
 </head>
 <body>
-	<h1>Deseja excluir o filme <span th:text="${filme.titulo}"></span>?</h1>
-	<h2>Essa ação não poderá ser desfeita!</h2>
-	<form action="" method="post">
-		<button type="submit">Confirmar exclusão</button>
-	</form>
+	<th:block th:include="fragments/modelo.html :: navbar"></th:block>
+	<div class="container mb-5">
+		<h1 class="display-4 mt-5">Deseja excluir o filme <span th:text="${filme.titulo}"></span>?</h1>
+		<h2>Essa ação não poderá ser desfeita!</h2>
+		<form action="" method="post">
+			<button class="btn btn-lg btn-danger" type="submit">Confirmar exclusão</button>
+			<a href="/filmes" class="btn btn-lg btn-light">Cancelar</a>
+		</form>
+	</div>
 </body>
 </html>

@@ -1,32 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://thymeleaf.org">
-<head>
-	<title>[[${filme.titulo}]] – Filmes</title>
-	<meta charset="utf-8">
+<head th:include="fragments/modelo.html :: head">
 </head>
 <body>
-	<h1>Detalhes do filme <span th:text="${filme.titulo}"></span></h1>
-	<ul>
-		<li><strong>ID:</strong> <span th:text="${filme.id}"></span></li>
-		<li><strong>Título:</strong> <span th:text="${filme.titulo}"></span></li>
-		<li><strong>Duração:</strong> <span th:text="${filme.duracao}"></span> minutos</li>
-		<li><strong>Data de lançamento:</strong> <span th:text="${#dates.format(filme.dataLancamento, 'dd/MM/yyyy')}"></span></li>
-		<li><strong>Direção:</strong> <span th:text="${filme.direcao}"></span></li>
-		<li><strong>Nota:</strong> <span th:text="${filme.nota}"></span></li>
-		<li><strong>Sinopse:</strong><div th:text="${filme.sinopse}"></div></li>
-		<li><strong>Anterior:</strong> <span th:text="${filme.anterior?.titulo}"></span></li>
-		<li><strong>Sequência:</strong> <span th:text="${filme.sequencia?.titulo}"></span></li>
-		<li><strong>Elenco:</strong> <span th:text="${#lists.size(filme.elenco)}"></span></li>
-		<!-- To do: exibir a média -->
-		<li><strong>Total de avaliações:</strong> <span th:text="${#lists.size(filme.avaliacoes)}"></span></li>
-	</ul>
-	<form method="post" th:action="${'/filmes/' + filme.id + '/avaliar'}">
-		<input type="hidden" name="filme" th:value="${filme.id}">
-		<button type="submit" name="nota" value="1">⭐</button>
-		<button type="submit" name="nota" value="2">⭐</button>
-		<button type="submit" name="nota" value="3">⭐</button>
-		<button type="submit" name="nota" value="4">⭐</button>
-		<button type="submit" name="nota" value="5">⭐</button>
-	</form>
+	<th:block th:include="fragments/modelo.html :: navbar"></th:block>
+	<div class="container mb-5">
+		<h1 class="display-4 mt-5">Detalhes do filme <strong th:text="${filme.titulo}"></strong></h1>
+		<table class="table table-light table-striped table-hover">
+			<tr>
+				<th>ID</th>
+				<td th:text="${filme.id}"></td>
+			</tr>
+			<tr>
+				<th>Título</th>
+				<td th:text="${filme.titulo}"></td>
+			</tr>
+			<tr>
+				<th>Duração</th>
+				<td th:text="${filme.duracao + ' minutos'}"></td>
+			</tr>
+			<tr>
+				<th>Data de lançamento</th>
+				<td th:text="${#dates.format(filme.dataLancamento, 'dd/MM/yyyy')}"></td>
+			</tr>
+			<tr>
+				<th>Direção</th>
+				<td th:text="${filme.direcao}"></td>
+			</tr>
+			<tr>
+				<th>Nota</th>
+				<td th:text="${filme.nota}"></td>
+			</tr>
+			<tr>
+				<th>Sinopse</th>
+				<td th:text="${filme.sinopse}"></td>
+			</tr>
+			<tr>
+				<th>Anterior</th>
+				<td th:if="${filme.anterior}"><a th:href="${(#mvc.url('filmeDetalhes').arg(0, filme.anterior?.id)).build()}" th:text="${filme.anterior?.titulo}"></a></td>
+				<td th:unless="${filme.anterior}">-</td>
+			</tr>
+			<tr>
+				<th>Sequência</th>
+				<td th:if="${filme.sequencia}"><a th:href="${(#mvc.url('filmeDetalhes').arg(0, filme.sequencia?.id)).build()}" th:text="${filme.sequencia?.titulo}"></a></td>
+				<td th:unless="${filme.sequencia}">-</td>
+			</tr>
+			<tr>
+				<th>Elenco</th>
+				<td th:if="${#lists.size(filme.elenco) > 0}">
+					<table class="table table-light table-striped">
+						<thead class="thead-dark">
+							<tr>
+								<th>ID</th>
+								<th>Nome</th>
+								<th>Data de Nascimento</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="ator : ${filme.elenco}">
+								<td th:text="${ator.id}"></td>
+								<td><a th:href="${(#mvc.url('atorDetalhes').arg(0, ator.id)).build()}" th:text="${ator.nome}"></a></td>
+								<td th:text="${#dates.format(ator.dataNascimento, 'dd/MM/yyyy')}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td th:unless="${#lists.size(filme.elenco) > 0}">Elenco não cadastrado</td>
+			</tr>
+			<tr>
+				<th>Média de avaliações</th>
+				<td>
+					<div class="h2" th:text="${#numbers.formatDecimal(media, 1, 2)}"></div>
+					<div th:text="${#lists.size(filme.avaliacoes) + ' avaliações'}"></div>
+				</td>
+			</tr>
+		</table>
+		<h2>Avaliar</h2>
+		<div class="row">
+			<div class="col">
+				<form method="post" th:action="${'/filmes/' + filme.id + '/avaliar'}">
+					<input type="hidden" name="filme" th:value="${filme.id}">
+					<button class="btn btn-lg btn-primary" type="submit" name="nota" value="1">⭐</button>
+					<button class="btn btn-lg btn-primary" type="submit" name="nota" value="2">⭐</button>
+					<button class="btn btn-lg btn-primary" type="submit" name="nota" value="3">⭐</button>
+					<button class="btn btn-lg btn-primary" type="submit" name="nota" value="4">⭐</button>
+					<button class="btn btn-lg btn-primary" type="submit" name="nota" value="5">⭐</button>
+				</form>
+			</div>
+		</div>
+		<div class="row mt-3">
+			<div class="col">
+				<a href="/filmes" class="btn btn-lg btn-primary">Todos os filmes</a>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="fragments/modelo.html :: scripts"></th:block>
 </body>
 </html>
