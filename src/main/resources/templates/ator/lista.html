@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org">
+<head>
+	<title>Atores</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>Atores</h1>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Nome</th>
+			<th>Data de Nascimento</th>
+			<th>Ações</th>
+		</tr>
+		<tr th:each="ator : ${atores}">
+			<td th:text="${ator.id}"></td>
+			<td><a th:href="${(#mvc.url('atorDetalhes').arg(0, ator.id)).build()}" th:text="${ator.nome}"></a></td>
+			<td th:text="${#dates.format(ator.dataNascimento, 'dd/MM/yyyy')}"></td>
+			<td><a th:href="${(#mvc.url('atorEditar').arg(0, ator.id)).build()}">Editar</a> | <a th:href="${(#mvc.url('atorExcluir').arg(0, ator.id)).build()}">Excluir</a></td>
+		</tr>
+	</table>
+</body>
+</html>

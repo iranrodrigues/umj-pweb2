@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org">
+<head>
+	<title>[[${filme.titulo}]] – Filmes</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>Detalhes do filme <span th:text="${filme.titulo}"></span></h1>
+	<ul>
+		<li><strong>ID:</strong> <span th:text="${filme.id}"></span></li>
+		<li><strong>Título:</strong> <span th:text="${filme.titulo}"></span></li>
+		<li><strong>Duração:</strong> <span th:text="${filme.duracao}"></span> minutos</li>
+		<li><strong>Data de lançamento:</strong> <span th:text="${#dates.format(filme.dataLancamento, 'dd/MM/yyyy')}"></span></li>
+		<li><strong>Direção:</strong> <span th:text="${filme.direcao}"></span></li>
+		<li><strong>Nota:</strong> <span th:text="${filme.nota}"></span></li>
+		<li><strong>Sinopse:</strong><div th:text="${filme.sinopse}"></div></li>
+		<li><strong>Anterior:</strong> <span th:text="${filme.anterior?.titulo}"></span></li>
+		<li><strong>Sequência:</strong> <span th:text="${filme.sequencia?.titulo}"></span></li>
+		<li><strong>Elenco:</strong> <span th:text="${#lists.size(filme.elenco)}"></span></li>
+		<!-- To do: exibir a média -->
+		<li><strong>Total de avaliações:</strong> <span th:text="${#lists.size(filme.avaliacoes)}"></span></li>
+	</ul>
+	<form method="post" th:action="${'/filmes/' + filme.id + '/avaliar'}">
+		<input type="hidden" name="filme" th:value="${filme.id}">
+		<button type="submit" name="nota" value="1">⭐</button>
+		<button type="submit" name="nota" value="2">⭐</button>
+		<button type="submit" name="nota" value="3">⭐</button>
+		<button type="submit" name="nota" value="4">⭐</button>
+		<button type="submit" name="nota" value="5">⭐</button>
+	</form>
+</body>
+</html>

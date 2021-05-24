@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<title>Novo Filme</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>Novo filme</h1>
+	<form action="" method="post">
+		<label>Título: <input type="text" name="titulo"></label><br>
+		<label>Duração: <input type="number" name="duracao"></label><br>
+		<label>Data de lançamento: <input type="date" name="dataLancamento"></label><br>
+		<label>Direção: <input type="text" name="direcao"></label><br>
+		<label>Sinopse: <textarea rows="4" cols="40" name="sinopse"></textarea></label><br>
+		<label>Nota: <input type="number" step="0.1" name="nota"></label><br>
+		<label>Sequência:
+		<select name="sequencia">
+			<option value="-1">(Nenhuma)</option>
+			<option th:each="filmeSeq : ${filmes}" th:text="${filmeSeq.titulo}" th:value="${filmeSeq.id}"></option>
+		</select></label><br>
+		<button type="submit">Salvar</button>
+	</form>
+</body>
+</html>

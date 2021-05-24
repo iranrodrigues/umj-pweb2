@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org">
+<head>
+	<title>[[${ator.nome}]] – Atores</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>Detalhes do ator <span th:text="${ator.nome}"></span></h1>
+	<ul>
+		<li><strong>ID:</strong> <span th:text="${ator.id}"></span></li>
+		<li><strong>Nome:</strong> <span th:text="${ator.nome}"></span></li>
+		<li><strong>Data de nascimento:</strong> <span th:text="${#dates.format(ator.dataNascimento, 'dd/MM/yyyy')}"></span></li>
+	</ul>
+</body>
+</html>

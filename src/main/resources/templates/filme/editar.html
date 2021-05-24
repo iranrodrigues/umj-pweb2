@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org">
+<head>
+	<title>Editar Filme</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>Editar filme <span th:text="${filme.titulo}"></span></h1>
+	<form action="" method="post">
+		<label>Título: <input type="text" name="titulo" th:value="${filme.titulo}"></label><br>
+		<label>Duração: <input type="number" name="duracao" th:value="${filme.duracao}"></label><br>
+		<label>Data de lançamento: <input type="date" name="dataLancamento" th:value="${filme.dataLancamento}"></label><br>
+		<label>Direção: <input type="text" name="direcao" th:value="${filme.direcao}"></label><br>
+		<label>Sinopse: <textarea rows="4" cols="40" name="sinopse" th:text="${filme.sinopse}"></textarea></label><br>
+		<label>Nota: <input type="number" step="0.1" name="nota" th:value="${filme.nota}"></label><br>
+		<label>Sequência:
+		<select name="sequencia">
+			<option value="-1">(Nenhuma)</option>
+			<option th:each="filmeSeq : ${filmes}" th:selected="(${filme.sequencia?.id} == ${filmeSeq.id})" th:text="${filmeSeq.titulo}" th:value="${filmeSeq.id}"></option>
+		</select></label><br>
+		<label>Adicionar ator ao elenco:
+		<select name="ator">
+			<option value="-1">(Nenhum)</option>
+			<option th:each="ator : ${atores}" th:text="${ator.nome}" th:value="${ator.id}"></option>
+		</select></label><br>
+		<button type="submit">Salvar</button>
+	</form>
+</body>
+</html>
