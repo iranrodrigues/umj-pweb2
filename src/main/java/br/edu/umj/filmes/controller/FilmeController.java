@@ -3,9 +3,13 @@ package br.edu.umj.filmes.controller;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +30,7 @@ public class FilmeController {
 	
 	@RequestMapping(value="/filmes/novo", method=RequestMethod.GET)
 	public String cadastrar(Model model) {
+		model.addAttribute("filme", new Filme());
 		Iterable<Filme> filmes = fr.findAll();
 		model.addAttribute("titulo", "Novo filme");
 		model.addAttribute("filmes", filmes);
@@ -33,7 +38,13 @@ public class FilmeController {
 	}
 	
 	@RequestMapping(value="/filmes/novo", method=RequestMethod.POST)
-	public String cadastrar(Filme f) {
+	public String cadastrar(Model model, @ModelAttribute("filme") @Valid Filme f, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			Iterable<Filme> filmes = fr.findAll();
+			model.addAttribute("titulo", "Novo filme");
+			model.addAttribute("filmes", filmes);
+			return "filme/novo";
+		}
 		fr.save(f);
 		return "redirect:/filmes";
 	}

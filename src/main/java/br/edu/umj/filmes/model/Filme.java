@@ -13,6 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,7 +26,10 @@ public class Filme {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="filme_seq")
 	@SequenceGenerator(name = "filme_seq", sequenceName = "filme_seq", initialValue = 1, allocationSize = 1)
 	private Long id;
+	@NotNull
+	@Size(min = 1)
 	private String titulo;
+	@PositiveOrZero
 	private int duracao;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
